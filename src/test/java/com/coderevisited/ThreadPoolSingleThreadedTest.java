@@ -13,6 +13,9 @@ import java.util.concurrent.RejectedExecutionException;
 public class ThreadPoolSingleThreadedTest {
 
 
+    /**
+     * Tests PoolSize
+     */
     @Test
     public void expectThreadPoolSizeWorks() {
         final ThreadPoolWithJobAffinityExecutor pool = new ThreadPoolWithJobAffinityExecutor(10);
@@ -20,6 +23,9 @@ public class ThreadPoolSingleThreadedTest {
         Assert.assertEquals(0, pool.map.size());
     }
 
+    /**
+     * Tests if all Jobs with same JobId get executed in the same thread.
+     */
     @Test
     public void expectJobAffinity() {
 
@@ -73,6 +79,9 @@ public class ThreadPoolSingleThreadedTest {
         Assert.assertEquals(0, pool.map.size());
     }
 
+    /**
+     * Tests if Job submission fails after terminating the thread pool
+     */
     @Test(expected = RejectedExecutionException.class)
     public void checkExceptionAfterShutdown() {
 
@@ -104,6 +113,9 @@ public class ThreadPoolSingleThreadedTest {
         });
     }
 
+    /**
+     * Tests if shutdown call waits for Jobs to be completed
+     */
     @Test
     public void expectJobsCompletedBeforeShutdown() {
 
@@ -182,6 +194,9 @@ public class ThreadPoolSingleThreadedTest {
         }
     }
 
+    /**
+     * Tests if Jobs are executed in the same order of submission.
+     */
     @Test
     public void determineJobOrder() {
 

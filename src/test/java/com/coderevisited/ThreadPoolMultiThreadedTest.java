@@ -12,6 +12,9 @@ import java.util.concurrent.RejectedExecutionException;
  */
 public class ThreadPoolMultiThreadedTest {
 
+    /**
+     * Tests pool size and map size after submitting many tasks
+     */
     @Test
     public void expectThreadPoolSizeWorksAfterSubmittingManyTasks() {
 
@@ -74,7 +77,9 @@ public class ThreadPoolMultiThreadedTest {
         Assert.assertEquals(0, pool.map.size());
     }
 
-
+    /**
+     * Tests if shutdown works and makes sure no job submission is allowed after shutdown.
+     */
     @Test
     public void expectShutdownWorks() {
 
@@ -156,6 +161,9 @@ public class ThreadPoolMultiThreadedTest {
         }
     }
 
+    /**
+     * Tests if Jobs with same JobId, gets executed with the same thread.
+     */
     @Test
     public void expectJobAffinityWorks() {
 
@@ -267,6 +275,9 @@ public class ThreadPoolMultiThreadedTest {
 
     }
 
+    /**
+     * Tests if execution order is maintained as per the job submission order
+     */
     @Test
     public void expectJobOrderWorks() {
 
