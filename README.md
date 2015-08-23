@@ -22,4 +22,4 @@ Two test classes have been added to test
 
 How to Compile and Run
 ----------------------
-Maven supported is added. Execute **`mvn clean install`** to compile, to run tests, to build jar.
+Maven supported is added. Execute **`mvn clean install`** to compile, to run tests, to build jar and to install jar to local maven repo
