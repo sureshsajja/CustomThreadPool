@@ -22,7 +22,7 @@ public class ThreadPoolWithJobAffinityExecutor implements ThreadPoolWithJobAffin
 
     private final int poolSize;
 
-    public final ConcurrentMap<Integer, ExecutorService> map;
+    final ConcurrentMap<Integer, ExecutorService> map;
     private Lock lock = new ReentrantLock();
     private AtomicBoolean state = new AtomicBoolean(true);
 
@@ -54,9 +54,12 @@ public class ThreadPoolWithJobAffinityExecutor implements ThreadPoolWithJobAffin
 
         int bucketNumber = getPool(jobId);
         if (state.get()) {
+            //check if pool is not terminated
             lock.lock();
             try {
                 if (state.get()) {
+                    //Check again if pool is not terminated, to avoid cases where when one thread is waiting for lock,
+                    //another thread terminated this pool
                     if (!map.containsKey(bucketNumber)) {
                         map.put(bucketNumber, Executors.newSingleThreadExecutor());
                     }
@@ -79,6 +82,7 @@ public class ThreadPoolWithJobAffinityExecutor implements ThreadPoolWithJobAffin
      */
     public void shutdown() {
         lock.lock();
+        //acquire lock and make sure no more submissions from now
         try {
             for (ConcurrentMap.Entry<Integer, ExecutorService> entry : map.entrySet()) {
                 entry.getValue().shutdown();

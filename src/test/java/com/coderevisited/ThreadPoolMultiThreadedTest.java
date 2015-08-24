@@ -388,6 +388,62 @@ public class ThreadPoolMultiThreadedTest {
                 prev = i;
             }
         }
+    }
+
+
+    /**
+     * Test if calling shutdown from multiple threads works with no exceptions
+     */
+    @Test
+    public void callingShutdownFromMultiplePoints() {
+
+        final ThreadPoolWithJobAffinityExecutor executor = new ThreadPoolWithJobAffinityExecutor(10);
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                executor.shutdown();
+            }
+        };
+
+        Thread t1 = new Thread(r);
+        Thread t2 = new Thread(r);
+        Thread t3 = new Thread(r);
+        Thread t4 = new Thread(r);
+
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+
+        try {
+            t2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+
+        try {
+            t3.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        try {
+            t4.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
 
     }
+
+
 }

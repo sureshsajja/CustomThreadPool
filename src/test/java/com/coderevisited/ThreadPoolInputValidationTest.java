@@ -10,13 +10,28 @@ import org.junit.Test;
 
 public class ThreadPoolInputValidationTest {
 
+    /**
+     * Tests if pool is initiated with at least one thread
+     */
     @Test(expected = IllegalArgumentException.class)
     public void checkConstruction() {
         ThreadPoolWithJobAffinityExecutor executor = new ThreadPoolWithJobAffinityExecutor(0);
         executor.shutdown();
     }
 
+    /**
+     * Tests if pool is initiated with at least one thread
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void checkConstructionWithNegativeSize() {
+        ThreadPoolWithJobAffinityExecutor executor = new ThreadPoolWithJobAffinityExecutor(-1);
+        executor.shutdown();
+    }
 
+
+    /**
+     * Tests if JobId is not null
+     */
     @Test(expected = NullPointerException.class)
     public void checkNullJobId() {
         ThreadPoolWithJobAffinityExecutor executor = new ThreadPoolWithJobAffinityExecutor(2);
@@ -32,6 +47,9 @@ public class ThreadPoolInputValidationTest {
         });
     }
 
+    /**
+     * Tests if runnable job is not null
+     */
     @Test(expected = NullPointerException.class)
     public void checkNullJob() {
 
