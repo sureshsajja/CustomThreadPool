@@ -15,9 +15,11 @@ Idea
 
 Tests
 -----
-Two test classes have been added to test  
+Some test classes have been added to test  
 1. Job submissions by single thread.  
-2. Job submission by multiple threads.
+2. Job submission by multiple threads.  
+3. Input validation to the Thread pool
+
 
 
 How to Compile and Run
