@@ -28,6 +28,9 @@ public class ThreadPoolWithJobAffinityExecutor implements ThreadPoolWithJobAffin
 
 
     public ThreadPoolWithJobAffinityExecutor(int corePoolSize) {
+
+        if (corePoolSize <= 0)
+            throw new IllegalArgumentException();
         this.poolSize = corePoolSize;
         this.map = new ConcurrentHashMap<>();
     }
@@ -45,6 +48,9 @@ public class ThreadPoolWithJobAffinityExecutor implements ThreadPoolWithJobAffin
      */
     @Override
     public void submit(String jobId, Runnable job) {
+
+        if (jobId == null || job == null)
+            throw new NullPointerException();
 
         int bucketNumber = getPool(jobId);
         if (state.get()) {
